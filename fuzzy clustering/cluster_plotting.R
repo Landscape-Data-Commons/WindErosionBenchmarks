@@ -2,6 +2,9 @@
 library(tidyverse)
 library(ggplot2)
 library(cowplot)
+library(gtsummary)
+library(webshot2)
+
 
 # Read in files
 high.mems <- read.csv("fuzzy clustering/high.mems.csv")
@@ -100,9 +103,13 @@ bgplot <- ggplot() +
   scale_color_manual(values = colors, name = "Cluster") +
   geom_smooth(data = high.mems, aes(x = BareSoilCover, y = horizontal_flux_total_MD),
               color="darkgray", se = F) +
-  theme_bw()
+  theme_bw() +  scale_y_continuous(name = "Q") +
+  scale_x_continuous(name = "Bare Soil (%)")
 
 bgplot
+
+
+
 
 
 # Cluster IQs
@@ -213,7 +220,20 @@ bg_allcluster_plot <- bgplot + geom_vline(data = high.mems %>%
 bg_allcluster_plot
 
 # All cluster gap
-lg_allcluster_plot <- bgplot + geom_vline(data = high.mems %>%
+lgplot <- ggplot() +
+  geom_point(data = high.mems, aes(x = LargeGaps,
+                                   y = horizontal_flux_total_MD,
+                                   color = Cluster, fill = Cluster)) +
+  scale_fill_manual(values = colors, name = "Cluster") +
+  scale_color_manual(values = colors, name = "Cluster") +
+  geom_smooth(data = high.mems, aes(x = BareSoilCover, y = horizontal_flux_total_MD),
+              color="darkgray", se = F) +
+  theme_bw()
+
+lgplot
+
+
+lg_allcluster_plot <- lgplot + geom_vline(data = high.mems %>%
                                             dplyr::filter(Cluster == "C1"),
                                           aes(xintercept = quantile(LargeGaps,
                                                                     probs = 0.50)),
@@ -260,11 +280,6 @@ lg_allcluster_plot <- bgplot + geom_vline(data = high.mems %>%
                dplyr::filter(Cluster == "C3"),
              aes(xintercept = quantile(LargeGaps,
                                        probs = 0.25)),
-             color = "aquamarine1", size = 1, lty = 2) +
-  geom_vline(data = high.mems %>%
-               dplyr::filter(Cluster == "C3"),
-             aes(xintercept = quantile(LargeGaps,
-                                       probs = 0.75)),
              color = "aquamarine1", size = 1, lty = 2) +
   geom_vline(data = high.mems %>%
                dplyr::filter(Cluster == "C4"),
@@ -318,12 +333,117 @@ lg_allcluster_plot <- bgplot + geom_vline(data = high.mems %>%
 lg_allcluster_plot
 
 
+# Total foliar clusters
+tfplot <- ggplot() +
+  geom_point(data = high.mems, aes(x = TotalFoliarCover,
+                                   y = horizontal_flux_total_MD,
+                                   color = Cluster, fill = Cluster)) +
+  scale_fill_manual(values = colors, name = "Cluster") +
+  scale_color_manual(values = colors, name = "Cluster") +
+  geom_smooth(data = high.mems, aes(x = BareSoilCover, y = horizontal_flux_total_MD),
+              color="darkgray", se = F) +
+  theme_bw()
+tf_allcluster_plot <- tfplot + geom_vline(data = high.mems %>%
+                                            dplyr::filter(Cluster == "C1"),
+                                          aes(xintercept = quantile(TotalFoliarCover,
+                                                                    probs = 0.50)),
+                                          color = "aquamarine4",
+                                          size = 1) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C1"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.25)),
+             color = "aquamarine4", size = 1, lty = 2) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C1"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.75)),
+             color = "aquamarine4", size = 1, lty = 2) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C2"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.50)),
+             color = "aquamarine3",
+             size = 1) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C2"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.25)),
+             color = "aquamarine3", size = 1, lty = 2) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C2"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.75)),
+             color = "aquamarine3", size = 1, lty = 2) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C3"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.75)),
+             color = "aquamarine1", size = 1, lty = 2) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C3"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.50)),
+             color = "aquamarine1",
+             size = 1) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C3"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.25)),
+             color = "aquamarine1", size = 1, lty = 2) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C4"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.50)),
+             color = "pink", size = 1) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C4"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.25)),
+             color = "pink", size = 1, lty = 2) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C4"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.75)),
+             color = "pink", size = 1, lty = 2) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C5"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.50)),
+             color = "palevioletred2", size = 1) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C5"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.25)),
+             color = "palevioletred2", size = 1, lty = 2) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C5"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.75)),
+             color = "palevioletred2", size = 1, lty = 2) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C6"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.50)),
+             color = "palevioletred4", size = 1) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C6"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.25)),
+             color = "palevioletred4", size = 1, lty = 2) +
+  geom_vline(data = high.mems %>%
+               dplyr::filter(Cluster == "C6"),
+             aes(xintercept = quantile(TotalFoliarCover,
+                                       probs = 0.75)),
+             color = "palevioletred4", size = 1, lty = 2) +
+  scale_y_continuous(name = "Q") +
+  scale_x_continuous(name = "Total foliar cover (%)")
+
+
+tf_allcluster_plot
 
 
 # High mem summary table
-library(gtsummary)
-library(webshot2)
-
 table(high.mems$Cluster)
 names(high.mems)
 sumtable <- dplyr::select(high.mems, Cluster, AH_NonNoxPerenForbCover, AH_NonNoxPerenGrassCover,

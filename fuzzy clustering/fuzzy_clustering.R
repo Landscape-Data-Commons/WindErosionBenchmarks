@@ -39,7 +39,7 @@ fg.foliar <- dplyr::select(analysis.table, 2, 3, 4, 6, 7, 8, 12, 15, 18)
 names(fg.foliar)
 str(fg.foliar)
 # apply standardization
-# fg.foliar <- vegan::decostand(fg.foliar, method = "hellinger")
+# fg.foliar.s <- vegan::decostand(fg.foliar, method = "hellinger")
 
 # Look at distributions
 names(fg.foliar)
@@ -214,3 +214,16 @@ high.sums <- high.means %>%
 write.csv(high.mems, "high.mems.csv", row.names = FALSE)
 write.csv(high.sums, "high.sums.csv", row.names = FALSE)
 write.csv(topmems, "topmems.csv", row.names = FALSE)
+
+
+
+# Review photos
+c1 <- dplyr::filter(high.mems, Cluster == "C2")
+c1pks <- subset(BLM_indicators, BLM_indicators$PrimaryKey %in% c1$PrimaryKey)
+c1pks <- dplyr::select(c1pks, PrimaryKey, EcologicalSiteId)
+c1 <- dplyr::left_join(c1, c1pks)
+c1pics <- dplyr::filter(c1, EcologicalSiteId == "R042XB014NM" |
+                           EcologicalSiteId == "R042XB012NM" |
+                          EcologicalSiteId == "R042XB010NM" |
+                          EcologicalSiteId == "R042XB023NM")
+
