@@ -384,10 +384,6 @@ sumtableIQR
 gt::gtsave(sumtableIQR, path = "fuzzy clustering/Figures", filename = "IQR_table.png")
 
 # Save as editable format
-
 sumtableIQR %>%
-  gt::gtsave(., "fuzzy clustering/Figures/IQR_rtf.rtf")
-
-sumtableIQR %>%
-  gt::gtsave(., "fuzzy clustering/Figures/IQR_doc.docx")
+  gt::gtsave(., "fuzzy clustering/Figures/ClusterTable_doc_AH.docx")
 
