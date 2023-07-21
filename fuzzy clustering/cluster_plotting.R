@@ -37,14 +37,15 @@ baseplot <- ggplot() +
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         axis.line = element_line(colour = "black"),
-        legend.position = "none") +
+        legend.position = "none",
+        text = element_text(size = 16)) +
   ylab(bquote("Q (g" ~m^-1 ~d^-1*")")) +
   scale_x_continuous(name = "Bare Soil (%)")
 
 baseplot
 
 # Cluster IQRs
-sg_allcluster_plot <- baseplot + geom_vline(data = high.mems %>%
+bs_allcluster_plot <- baseplot + geom_vline(data = high.mems %>%
                                               dplyr::filter(Cluster == "C1"),
                                             aes(xintercept = quantile(BareSoilCover,
                                                                       probs = 0.50)),
@@ -93,7 +94,7 @@ sg_allcluster_plot <- baseplot + geom_vline(data = high.mems %>%
              aes(xintercept = quantile(BareSoilCover,
                                        probs = 0.75)),
              color = "#DDCC77", size = 0.5, lty = 2)
-sg_allcluster_plot
+bs_allcluster_plot
 
 ggsave("fuzzy clustering/Figures/bs_allclusters.png", dpi = 300, height = 4, width = 6, unit = "in")
 
@@ -113,14 +114,15 @@ baseplot <- ggplot() +
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         axis.line = element_line(colour = "black"),
-        legend.position = "none") +
+        legend.position = "none",
+        text = element_text(size = 16)) +
   ylab(bquote("Q (g" ~m^-1 ~d^-1*")")) +
   scale_x_continuous(name = "Total Foliar Cover (%)")
 
 baseplot
 
 # Cluster IQRs
-sg_allcluster_plot <- baseplot + geom_vline(data = high.mems %>%
+tf_allcluster_plot <- baseplot + geom_vline(data = high.mems %>%
                                               dplyr::filter(Cluster == "C1"),
                                             aes(xintercept = quantile(TotalFoliarCover,
                                                                       probs = 0.50)),
@@ -169,7 +171,7 @@ sg_allcluster_plot <- baseplot + geom_vline(data = high.mems %>%
              aes(xintercept = quantile(TotalFoliarCover,
                                        probs = 0.75)),
              color = "#DDCC77", size = 0.5, lty = 2)
-sg_allcluster_plot
+tf_allcluster_plot
 
 ggsave("fuzzy clustering/Figures/tf_allclusters.png", dpi = 300, height = 4, width = 6, unit = "in")
 
@@ -189,14 +191,15 @@ baseplot <- ggplot() +
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         axis.line = element_line(colour = "black"),
-        legend.position = "none") +
+        legend.position = "none",
+        text = element_text(size = 16)) +
   ylab(bquote("Q (g" ~m^-1 ~d^-1*")")) +
   scale_x_continuous(name = "Gap Cover 100 cm + (%)")
 
 baseplot
 
 # Cluster IQRs
-sg_allcluster_plot <- baseplot + geom_vline(data = high.mems %>%
+lg_allcluster_plot <- baseplot + geom_vline(data = high.mems %>%
                                               dplyr::filter(Cluster == "C1"),
                                             aes(xintercept = quantile(LargeGaps,
                                                                       probs = 0.50)),
@@ -245,7 +248,7 @@ sg_allcluster_plot <- baseplot + geom_vline(data = high.mems %>%
              aes(xintercept = quantile(LargeGaps,
                                        probs = 0.75)),
              color = "#DDCC77", size = 0.5, lty = 2)
-sg_allcluster_plot
+lg_allcluster_plot
 
 ggsave("fuzzy clustering/Figures/lg_allclusters.png", dpi = 300, height = 4, width = 6, unit = "in")
 
@@ -267,7 +270,8 @@ baseplot <- ggplot() +
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         axis.line = element_line(colour = "black"),
-        legend.position = "none") +
+        legend.position = "none",
+        text = element_text(size = 16)) +
   ylab(bquote("Q (g" ~m^-1 ~d^-1*")")) +
   scale_x_continuous(name = "Scaled Gap", trans = "pseudo_log")
 
