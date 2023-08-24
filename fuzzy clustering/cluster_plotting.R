@@ -1,7 +1,6 @@
 # Plotting fuzzy clusters and Q
 library(tidyverse)
 library(ggplot2)
-library(cowplot)
 library(gtsummary)
 library(webshot2)
 library(gt)
