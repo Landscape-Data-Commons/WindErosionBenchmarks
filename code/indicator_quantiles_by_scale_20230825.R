@@ -286,7 +286,10 @@ plots <- lapply(X = 1:nrow(plot_parameters),
                           panel.grid.minor = element_blank(),
                           panel.background = element_rect(fill = "white"),
                           axis.line = element_line(colour = "black"),
-                          axis.title.y = element_blank())
+                          axis.title.y = element_blank(),
+                          axis.text.y = element_text(color = "black"),
+                          axis.ticks.y = element_blank(),
+                          legend.position = "none")
                   
                   # Adjust based on row
                   if (parameters$row[X] == "top") {
@@ -356,7 +359,12 @@ q_vs_baresoil_plot <- ggplot(data = plotting_data_wide) +
               linewidth = 0.5) +
   xlim(c(0, 100)) +
   labs(x = "Bare soil (%)",
-       y = "Q") +
+       # I *mostly* understand what I'm doing here because it's cobbled together
+       # from examples instead of based on actually figuring out what the help
+       # docs are saying, but the important thing is that it works
+       # This labels the y axis with Q (g m^-1 d^-1) but the Q is italicized and
+       # the superscripts are actually superscript
+       y = expression(italic(Q)~textstyle(group("(", g~m^{-1}~d^{-1}, ")")))) +
   facet_wrap(facets = ~ group,
              ncol = length(plotting_data_list)) +
   theme(panel.border = element_blank(),
