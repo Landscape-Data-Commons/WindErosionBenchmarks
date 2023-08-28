@@ -88,6 +88,12 @@ data <- dplyr::left_join(x = data,
 data$MeanGap_1m[is.na(data$MeanGap_1m)] <- 0
 data$ScaledGap_1m[is.na(data$ScaledGap_1m)] <- 0
 
+# Turns out that I don't want MeanGap_1m but the percent in gaps greater than or
+# equal to 1 m
+data$GapCover_101_plus <- mapply(X = data$GapCover_101_200,
+                                 Y = data$GapCover_200_plus,
+                                 FUN = sum)
+
 #### PLOTTING ##################################################################
 # Okay! So what we're after is:
 # A box-and-scatterplot combo depicting proposed benchmark categorizations
@@ -98,8 +104,21 @@ data$ScaledGap_1m[is.na(data$ScaledGap_1m)] <- 0
 # Q (from AERO)
 indicators <- c("Bare soil (%)" = "BareSoilCover",
                 "Total foliar cover (%)" = "TotalFoliarCover",
-                "Mean area in gaps greater than 1m" = "MeanGap_1m",
+                "Area in gaps greater than 1m (%)" = "GapCover_101_plus",
+                # "Mean area in gaps greater than 1m" = "MeanGap_1m",
                 "Q" = "horizontal_flux_total_MD")
+
+# Get the median per-indicator at the MLRA scale
+# This is just easier with the indicators vector already made
+data_tall <- tidyr::pivot_longer(data = dplyr::select(.data = data,
+                                                      PrimaryKey,
+                                                      dplyr::all_of(unname(indicators))),
+                                 cols = dplyr::all_of(unname(indicators)),
+                                 names_to = "indicator",
+                                 values_to = "value")
+medians <- dplyr::summarize(dplyr::group_by(.data = data_tall,
+                                            indicator),
+                            median = median(value))
 
 # We need quantile info for controlling aesthetics reasons
 # But quantiles are calcuated per-subset
@@ -220,7 +239,7 @@ plot_parameters <- expand.grid(group = c("MLRA",
                                          "ESG"),
                                indicator = c("TotalFoliarCover",
                                              "BareSoilCover",
-                                             "MeanGap_1m"))
+                                             "GapCover_101_plus"))
 plot_parameters$column <- rep(c("left", "middle", "right"),
                               times = 3)
 plot_parameters$row <- as.vector(sapply(X = c("top", "middle", "bottom"),
@@ -379,7 +398,7 @@ combined_plot
 #### WRITING ###################################################################
 ggsave(plot = combined_plot,
        filename = paste0(filepath, "/figures/",
-                         "indicator_quantiles_figure_20230825.png"),
+                         "indicator_quantiles_figure_20230828.png"),
        device = "png")
 
 write.csv(x = attribute_lut,
