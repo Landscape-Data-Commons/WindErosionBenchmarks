@@ -9,8 +9,12 @@ library(cowplot)
 library(grid)
 library(gridExtra)
 
+# Add itaclis to Q in all plots
+# bquote(italic(Q)~"(g" ~m^-1 ~d^-1*")")
 
-# Read in clustered data
+
+
+# Read in cluster assigned data
 high.mems <- read.csv("fuzzy clustering/high.mems.csv")
 
 
@@ -34,11 +38,11 @@ baseplot <- ggplot() +
   theme(panel.border = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.background = element_blank(),
+        panel.background = element_rect(fill = "white"),
         axis.line = element_line(colour = "black"),
         legend.position = "none",
         text = element_text(size = 16)) +
-  ylab(bquote("Q (g" ~m^-1 ~d^-1*")")) +
+  ylab(bquote(italic(Q)~"(g" ~m^-1 ~d^-1*")")) +
   scale_x_continuous(name = "Bare Soil (%)")
 
 baseplot
@@ -111,11 +115,11 @@ baseplot <- ggplot() +
   theme(panel.border = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.background = element_blank(),
+        panel.background = element_rect(fill = "white"),
         axis.line = element_line(colour = "black"),
         legend.position = "none",
         text = element_text(size = 16)) +
-  ylab(bquote("Q (g" ~m^-1 ~d^-1*")")) +
+  ylab(bquote(italic(Q)~"(g" ~m^-1 ~d^-1*")")) +
   scale_x_continuous(name = "Total Foliar Cover (%)")
 
 baseplot
@@ -188,11 +192,11 @@ baseplot <- ggplot() +
   theme(panel.border = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.background = element_blank(),
+        panel.background = element_rect(fill = "white"),
         axis.line = element_line(colour = "black"),
         legend.position = "none",
         text = element_text(size = 16)) +
-  ylab(bquote("Q (g" ~m^-1 ~d^-1*")")) +
+  ylab(bquote(italic(Q)~"(g" ~m^-1 ~d^-1*")")) +
   scale_x_continuous(name = "Gap Cover 100 cm + (%)")
 
 baseplot
@@ -267,11 +271,11 @@ baseplot <- ggplot() +
   theme(panel.border = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.background = element_blank(),
+        panel.background = element_rect(fill = "white"),
         axis.line = element_line(colour = "black"),
         legend.position = "none",
         text = element_text(size = 16)) +
-  ylab(bquote("Q (g" ~m^-1 ~d^-1*")")) +
+  ylab(bquote(italic(Q)~"(g" ~m^-1 ~d^-1*")")) +
   scale_x_continuous(name = "Scaled Gap", trans = "pseudo_log")
 
 baseplot

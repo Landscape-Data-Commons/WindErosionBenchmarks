@@ -61,7 +61,9 @@ ggplot2::ggplot(fg.foliar.s, aes(AH_NonNoxShrubCover)) + geom_histogram()
 ggplot2::ggplot(fg.foliar.s, aes(AH_NonNoxTreeCover)) + geom_histogram()
 ggplot2::ggplot(fg.foliar.s, aes(AH_NoxCover)) + geom_histogram()
 
-
+### SET SEED
+# Set seed for repeatability
+set.seed(321)
 
 ### ORDINATION
 # Make dissimilarity index
