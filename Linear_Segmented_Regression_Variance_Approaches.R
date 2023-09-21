@@ -651,7 +651,7 @@ Gap_variance <- ggplot(indicators_var, aes(x = GapCover_100_plus_bins, y = varia
         panel.background = element_blank(),
         axis.line = element_line(colour = "black"),
         legend.position = "none") +
-  labs(x = "Gap Cover 100 cm + (%)", y = expression(paste("Variance of", italic("Q"), " (g ", m^-2, " ", d^-2,")")))+
+  labs(x = "Gap Cover 100 cm + (%)", y = expression(paste("Variance of", italic("Q"), " ( ", g^2, " ", m^-2, " ", d^-2,")")))+
   scale_x_continuous(breaks=seq(1,10,1),labels=my_labels)+
   geom_segment(aes(x=5.5, y=Inf, xend=5.5, yend=-Inf), linetype="dashed",col = "black")
 
@@ -729,7 +729,7 @@ BG_variance <- ggplot(indicators_var, aes(x = BareSoilCover_bins, y = variance))
         panel.background = element_blank(),
         axis.line = element_line(colour = "black"),
         legend.position = "none") +
-  labs(x = "Bare Soil (%)", y = expression(paste("Variance of", italic("Q"), " (g ", m^-2, " ", d^-2,")")))+
+  labs(x = "Bare Soil (%)", y = expression(paste("Variance of", italic("Q"), " ( ", g^2, " ", m^-2, " ", d^-2,")")))+
   scale_x_continuous(breaks=seq(1,9,1),labels=my_labels)+
   geom_segment(aes(x=4.5, y=Inf, xend=4.5, yend=-Inf), linetype="dashed",col = "black")
 
@@ -806,7 +806,7 @@ TFC_variance <- ggplot(indicators_var, aes(x = TotalFoliarCover_bins, y = varian
         panel.background = element_blank(),
         axis.line = element_line(colour = "black"),
         legend.position = "none") +
-  labs(x = "Total Foliar Cover (%)", y = expression(paste("Variance of", italic("Q"), " (g ", m^-2, " ", d^-2,")")))+
+  labs(x = "Total Foliar Cover (%)", y = expression(paste("Variance of", italic("Q"), " ( ", g^2, " ", m^-2, " ", d^-2,")")))+
   scale_x_continuous(breaks=seq(1,9,1),labels=my_labels)+
   geom_segment(aes(x=3.5, y=Inf, xend=3.5, yend=-Inf), linetype="dashed",col = "black")
 
@@ -890,7 +890,7 @@ logged_scaledgap_variance <- ggplot(indicators2_var, aes(x = logged_ScaledGap_bi
         panel.background = element_blank(),
         axis.line = element_line(colour = "black"),
         legend.position = "none") +
-  labs(x = expression(paste("Log" [10], " Mean Scaled Gap")), y = expression(paste("Variance of", italic("Q"), " (g ", m^-2, " ", d^-2,")")))+
+  labs(x = expression(paste("Log" [10], " Mean Scaled Gap")), y = expression(paste("Variance of", italic("Q"), " ( ", g^2, " ", m^-2, " ", d^-2,")")))+
   scale_x_continuous(breaks=seq(1,7,1),labels=my_labels)+
   geom_segment(aes(x=5.5, y=Inf, xend=5.5, yend=-Inf), linetype="dashed",col = "black")
 
